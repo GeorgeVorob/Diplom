@@ -16,19 +16,19 @@ namespace Diplom
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        IWebHostEnvironment _CurrentEnvironment { get; }
+        IWebHostEnvironment CurrentEnvironment { get; }
 
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
-            _CurrentEnvironment = env;
+            CurrentEnvironment = env;
         }
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            if(_CurrentEnvironment.IsDevelopment())
+            if (CurrentEnvironment.IsDevelopment())
             {
                 services.AddRazorPages()
                     .AddRazorRuntimeCompilation();
