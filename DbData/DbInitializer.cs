@@ -13,7 +13,6 @@ namespace Diplom.DbData
         {
             context.Database.EnsureCreated();
 
-            // Look for any students.
             if (context.Products.Any())
             {
                 return;   // DB has been seeded

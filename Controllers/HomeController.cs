@@ -25,13 +25,9 @@ namespace Diplom.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IndexModel model = new IndexModel(await _context.Categories.ToListAsync());
+            List<Category> categories = await _context.Categories.ToListAsync();
+            IndexModel model = new IndexModel(categories);
             return View(model);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
