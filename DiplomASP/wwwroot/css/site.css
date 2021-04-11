@@ -1,0 +1,13 @@
+﻿body {
+    background-color: #fafafa;
+}
+
+.dark-link {
+    color: rgba(255,255,255,.55)
+}
+.dark-link:hover {
+    color: rgba(255,255,255,.35)
+}
+.dark-link:visited {
+    color: rgba(255,255,255,.55)
+}
