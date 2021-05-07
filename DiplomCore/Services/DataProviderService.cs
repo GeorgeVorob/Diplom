@@ -40,26 +40,5 @@ namespace DiplomCore.Services
                 return items;
             }
         }
-        //public List<Product> GetProductsJoinOrders(Expression<Func<OrderedProduct, bool>> orderArgs, Expression<Func<Product, bool>> productArgs, int amount)
-        //{
-        //    using (var db = new Context(connectionString))
-        //    {
-        //        var orders = db.OrderedProducts.Where(orderArgs.Compile()).ToList();
-
-        //        return db.Products.Join(
-        //            orders,
-        //            p => p.ID,
-        //            o => o.ProductID,
-        //            (p, o) => new Product
-        //            {
-        //                CategoryId = p.CategoryId,
-        //                Name = p.Name,
-        //                quantity = p.quantity,
-        //                Price = p.Price,
-        //                Discount = p.Discount
-        //            }
-        //            ).Where(productArgs.Compile()).Take(amount).ToList();
-        //    }
-        //}
     }
 }
