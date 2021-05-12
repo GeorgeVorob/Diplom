@@ -30,7 +30,7 @@
                     <div class="card p-2 m-3 col-3 col-lg-3" style="height: 100px; width: 400px">
                         <div class="row g-0" style="height: 100%">
                             <div class="col-4" style="height: 100%">
-                                <img src="data:image/png;base64, @Convert.ToBase64String(popularProduct.Image)" alt="..." class="img-fluid card-img-popular" style="height: 100%" />
+                                <img src="data:image/jpg;base64, @popularProduct.ImageThumbnail" alt="..." class="img-fluid card-img-popular" style="height: 100%" />
                             </div>
                             <div class="col-8">
                                 <div class="card-body">
@@ -50,7 +50,7 @@
                 <div class="card col-lg-3 col-md-3 p-2 m-3" style="height: 100px; width: 400px">
                     <div class="row g-0" style="height: 100%">
                         <div class="col-4" style="height: 100%">
-                            <img src="data:image/png;base64, @Convert.ToBase64String(newProduct.Image)" alt="..." class="img-fluid card-img-popular" style="height: 100%" />
+                            <img src="data:image/jpg;base64, @newProduct.ImageThumbnail" alt="..." class="img-fluid card-img-popular" style="height: 100%" />
                         </div>
                         <div class="col-8">
                             <div class="card-body">

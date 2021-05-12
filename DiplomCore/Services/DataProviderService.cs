@@ -29,15 +29,22 @@ namespace DiplomCore.Services
         {
             using (var db = new Context(connectionString))
             {
-                var itemsTemp = db.Products.Include(i => i.Orders);
+                var itemsTemp = db.Products.Include(i => i.Orders).Include(i => i.Images);
 
                 if (whereArgs != null)
                     itemsTemp.Where(whereArgs);
                 if (orderArgs != null)
                     itemsTemp.OrderBy(orderArgs);
 
-                var items = itemsTemp.Take(amount).ToList();
-                return items;
+                return itemsTemp.Take(amount).ToList();
+            }
+        }
+        public Image GetImageById(int id)
+        {
+            using (var db = new Context(connectionString))
+            {
+                Image returnImg = db.Images.Include(i => i.ImageContent).Where(i => i.ImageID == id).SingleOrDefault();
+                return returnImg;
             }
         }
     }

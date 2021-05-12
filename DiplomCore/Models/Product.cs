@@ -8,6 +8,10 @@ namespace DiplomCore.Models
 {
     public class Product
     {
+        public Product()
+        {
+            this.Images = new List<Image>();
+        }
         public int ID { get; set; }
         [Required]
         public int CategoryId { get; set; }
@@ -39,7 +43,8 @@ namespace DiplomCore.Models
 
         public List<OrderedProduct> Orders { get; set; }
 
-        public byte[] Image { get; set; }
+        public string ImageThumbnail { get; set; }
+        public List<Image> Images { get; set; }
 
         public Category Category { get; set; }
     }

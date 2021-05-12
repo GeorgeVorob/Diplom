@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using DiplomCore.Models;
 using DiplomCore.Models.CategoriesModels;
 
@@ -41,7 +42,8 @@ namespace DiplomCore
                     Price=3190,
                     PostDate = DateTime.Now,
                     Category = Categories.First(),
-                    Image = File.ReadAllBytes(@"wwwroot\TestImages\1.jpg")
+                    ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\1.jpg")),
+                    Images = context.Images.ToList() 
                 }
                 };
 
@@ -61,13 +63,37 @@ namespace DiplomCore
                     Category = Categories[1],
                     cores = 6,
                     clock = 3400,
-                    Image = File.ReadAllBytes(@"wwwroot\TestImages\2.PNG")
+                    ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\2.jpg"))
                 }
                 };
 
                 foreach (var i in prots)
                 {
                     context.CPUs.Add(i);
+                }
+
+                context.SaveChanges();
+
+                var ImageContens = new ImageContent[]
+                {
+                    new ImageContent{ content = File.ReadAllBytes(@"wwwroot\TestImages\carousel\1s.jpg")},
+                    new ImageContent{ content = File.ReadAllBytes(@"wwwroot\TestImages\carousel\2b.jpg")}
+                };
+                foreach (var ic in ImageContens)
+                {
+                    context.ImageContents.Add(ic);
+                }
+                context.SaveChanges();
+
+                var Images = new Image[]
+                {
+                    new Image {ImageContentID = context.ImageContents.ToList()[0].ImageContentID , ProductID = context.GraphicsCards.FirstOrDefault().ID},
+                    new Image {ImageContentID = context.ImageContents.ToList()[1].ImageContentID , ProductID = context.GraphicsCards.FirstOrDefault().ID},
+                };
+
+                foreach (var I in Images)
+                {
+                    context.Images.Add(I);
                 }
 
                 context.SaveChanges();
