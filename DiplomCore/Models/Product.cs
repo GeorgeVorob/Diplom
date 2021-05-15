@@ -6,15 +6,13 @@ using System.IO;
 
 namespace DiplomCore.Models
 {
-    public class Product
+    public abstract class Product
     {
-        public Product()
-        {
-            this.Images = new List<Image>();
-        }
+        public abstract Dictionary<string, string> GetPublicTTX();
         public int ID { get; set; }
         [Required]
-        public int CategoryId { get; set; }
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
 
         [Required]
         [StringLength(200)]
@@ -24,9 +22,8 @@ namespace DiplomCore.Models
         public int quantity { get; set; }
 
         [Required]
-        [DataType(DataType.Currency)]
         [Column(TypeName = "money")]
-        public decimal Price { get; set; }
+        public int Price { get; set; }
 
         [DataType(DataType.Currency)]
         [Column(TypeName = "money")]
@@ -44,8 +41,6 @@ namespace DiplomCore.Models
         public List<OrderedProduct> Orders { get; set; }
 
         public string ImageThumbnail { get; set; }
-        public List<Image> Images { get; set; }
-
-        public Category Category { get; set; }
+        public List<Image> Images { get; set; } = new List<Image>();
     }
 }

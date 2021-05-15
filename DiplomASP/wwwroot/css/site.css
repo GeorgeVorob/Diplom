@@ -11,3 +11,12 @@
 .dark-link:visited {
     color: rgba(255,255,255,.55)
 }
+.light-link {
+    color: rgb(87, 87, 87)
+}
+.light-link:hover {
+    color: rgb(37, 37, 37)
+}
+.light-link:visited {
+    color: rgb(87, 87, 87)
+}

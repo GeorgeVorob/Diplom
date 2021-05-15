@@ -1,30 +1,53 @@
-﻿@model DiplomCore.Models.Product
-<div class="container-lg px-0">
-    <div class="row">
-        <div class="col">
-            <h5>   Product</h5>
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="@Url.Content("/aaa")" class="d-block w-100" alt="...">
-                    </div>
-                    
-                    @foreach (Image I in Model.Images.Skip(1))
-                    {
-                        <div class="carousel-item">
-                            <img src="@Url.Action("ReturnImage", "Image", new {imgID = I.ImageID })" class="d-block w-100" alt="...">
+﻿@model DiplomASP.Models.ViewModels.ProductViewModel
+<div class="row justify-content-end" style="margin: 0 100px 0 100px">
+    <div class="col-7">
+        <div class="row">
+            <div class="col-6">
+                <h5>Product</h5>
+                <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" style=" height:400px !important;">
+                        >
+                        <div class="carousel-item active" style="height: 100%; width: 100%;">
+                            <img src="@Url.Action("ReturnImage", "Image", new {imgID = Model.Product.Images?.FirstOrDefault()?.ImageID })" class="d-block w-100" alt="...">
                         </div>
-                    }
+                        @foreach (Image I in Model.Product.Images?.Skip(1))
+                        {
+            <div class="carousel-item">
+                <img src="@Url.Action("ReturnImage", "Image", new {imgID = I.ImageID })" class="d-block w-100" alt="...">
+            </div>}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+            </div>
+            <div class="col-6">
+                <h4>@Model.Product.Name</h4>
+                <h3>@Model.Product.Price Руб.</h3>
+                <button class="btn btn-outline-dark" style="float:right;">Добавить в корзину</button>
+            </div>
+            <div class="col-12">
+                @foreach (var stats in Model.Product.GetPublicTTX())
+                {
+    <span>@stats.Key: @stats.Value</span><hr />}
             </div>
         </div>
+    </div>
+    <div class="col-3" style="float:right">
+        Похожие товары:
+        @foreach (var sameprods in Model.SameRecommendedProducts)
+        {
+            <div style="float: right;text-align: center;">
+                <img src="data:image/jpg;base64, @sameprods.ImageThumbnail" style="height: 170px; width: 170px; object-fit: contain"/> <br/>
+                <h6><a href="@Url.Action("Index", "Product", new {productId = sameprods.ID})" class="light-link"><span style="font-size:13px">@sameprods.Name</span></a></h6>
+                <span style="font-size:12px">@sameprods.Price руб.</span>
+                <hr/>
+            </div>
+        }
     </div>
 </div>

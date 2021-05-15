@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DiplomCore.Models.CategoriesModels
 {
@@ -9,6 +10,16 @@ namespace DiplomCore.Models.CategoriesModels
 
         [Required]
         public int clock { get; set; } //МГц 
+
+        public override Dictionary<string, string> GetPublicTTX()
+        {
+            var stats = new Dictionary<string, string>();
+
+            stats.Add("Кол-во ядер", this.cores.ToString());
+            stats.Add("Частота", this.clock.ToString());
+
+            return stats;
+        }
         //TODO
     }
 }

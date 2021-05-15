@@ -1,4 +1,5 @@
-﻿using DiplomCore.Models;
+﻿using DiplomASP.Models.ViewModels;
+using DiplomCore.Models;
 using DiplomCore.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,10 +19,13 @@ namespace DiplomASP.Controllers
 
         public IActionResult Index(int? productId)
         {
-            int id = (int)productId;
-            Product product = _data.GetProducts(p => p.ID == id, null, 1).First();
-            if (product == null) return RedirectToAction("Index", "Home"); //TODO: add 404
-            return View(product);
+            ProductViewModel model = new ProductViewModel();
+
+            model.Product = _data.GetProducts(p => p.ID == productId, null, 1).First();
+            if (model.Product == null) return RedirectToAction("Index", "Home"); //TODO: add 404
+
+            model.SameRecommendedProducts = _data.GetProducts(p => p.Price > (model.Product.Price * 1.3) || p.Price < (model.Product.Price / 1.3), null ,3);
+            return View(model);
         }
     }
 }

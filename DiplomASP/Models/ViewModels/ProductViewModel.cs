@@ -8,8 +8,8 @@ namespace DiplomASP.Models.ViewModels
 {
     public class ProductViewModel
     {
-        Product Product { get; set; }
+        public Product Product { get; set; }
 
-        List<Product> SameRecommendedProducts { get; set; }
+        public List<Product> SameRecommendedProducts { get; set; }
     }
 }

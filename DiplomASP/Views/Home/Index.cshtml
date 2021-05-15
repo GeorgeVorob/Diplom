@@ -4,64 +4,70 @@
     ViewData["Title"] = "Home Page";
 }
 <link rel="stylesheet" href="~/css/Index.css" />
-<div class="col-xl-2 ml-4">
-    <!--sidebar-->
-    <div class="bg-dark mx-3 categories-sidebar py-2">
-        <ul class="">
-            @foreach (var category in Model.categories)
-            {
-                <li class="my-2 pe-2 ps-0">
-                    <a class="dark-link" href="#"> @category.CategoryName </a>
-                </li>
-            }
-
-        </ul>
-    </div>
-</div>
-<div class="col-xl-10">
-    <main role="main" class="">
-        <div class="row d-flex justify-content-center">
-            <!--content-->
-            <h3>Популярные товары</h3>
-            @for (int x = 0; x < 3; x++) //доп. цикл чтобы вывести больше карточек товаров
-            {
-                @foreach (var popularProduct in Model.popularProducts)
+<div class="row">
+    <div class="col-xl-2 ml-4">
+        <!--sidebar-->
+        <div class="bg-dark mx-3 categories-sidebar py-2">
+            <ul class="">
+                @foreach (var category in Model.categories)
                 {
-                    <div class="card p-2 m-3 col-3 col-lg-3" style="height: 100px; width: 400px">
+                    <li class="my-2 pe-2 ps-0">
+                        <a class="dark-link" href="#"> @category.CategoryName </a>
+                    </li>
+                }
+
+            </ul>
+        </div>
+    </div>
+    <div class="col-xl-10">
+        <main role="main" class="">
+            <div class="row d-flex justify-content-center">
+                <!--content-->
+                <h3>Популярные товары</h3>
+                @for (int x = 0; x < 3; x++) //доп. цикл чтобы вывести больше карточек товаров
+                {
+                    @foreach (var popularProduct in Model.popularProducts)
+                    {
+                        <div class="card p-2 m-3 col-3 col-lg-3" style="height: 100px; width: 400px">
+                            <div class="row g-0" style="height: 100%">
+                                <div class="col-4" style="height: 100%">
+                                    <img src="data:image/jpg;base64, @popularProduct.ImageThumbnail" alt="..." class="img-fluid card-img-popular" style="height: 100%" />
+                                </div>
+                                    <div class="col-8">
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                <a href="@Url.Action("Index", "Product", new {productId = popularProduct.ID})" class="light-link">
+                                                    @popularProduct.Name
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <h3>Новые товары</h3>
+                @foreach (var newProduct in Model.newProducts)
+                {
+                    <div class="card col-lg-3 col-md-3 p-2 m-3" style="height: 100px; width: 400px">
                         <div class="row g-0" style="height: 100%">
                             <div class="col-4" style="height: 100%">
-                                <img src="data:image/jpg;base64, @popularProduct.ImageThumbnail" alt="..." class="img-fluid card-img-popular" style="height: 100%" />
+                                <img src="data:image/jpg;base64, @newProduct.ImageThumbnail" alt="..." class="img-fluid card-img-popular" style="height: 100%" />
                             </div>
                             <div class="col-8">
                                 <div class="card-body">
-                                    <p class="card-text">
-                                        @popularProduct.Name
+                                    <p class="card-popular-text">
+                                        <a href="@Url.Action("Index", "Product", new {productId = newProduct.ID})" class="light-link">
+                                            @newProduct.Name
+                                            </a>
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
-            }
-
-            <h3>Новые товары</h3>
-            @foreach (var newProduct in Model.newProducts)
-            {
-                <div class="card col-lg-3 col-md-3 p-2 m-3" style="height: 100px; width: 400px">
-                    <div class="row g-0" style="height: 100%">
-                        <div class="col-4" style="height: 100%">
-                            <img src="data:image/jpg;base64, @newProduct.ImageThumbnail" alt="..." class="img-fluid card-img-popular" style="height: 100%" />
-                        </div>
-                        <div class="col-8">
-                            <div class="card-body">
-                                <p class="card-popular-text">
-                                    @newProduct.Name
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </main>
+            </div>
+        </main>
+    </div>
 </div>
