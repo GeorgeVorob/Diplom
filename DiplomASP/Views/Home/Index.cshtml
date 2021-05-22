@@ -24,8 +24,6 @@
             <div class="row d-flex justify-content-center">
                 <!--content-->
                 <h3>Популярные товары</h3>
-                @for (int x = 0; x < 3; x++) //доп. цикл чтобы вывести больше карточек товаров
-                {
                     @foreach (var popularProduct in Model.popularProducts)
                     {
                         <div class="card p-2 m-3 col-3 col-lg-3" style="height: 100px; width: 400px">
@@ -44,7 +42,6 @@
                                     </div>
                             </div>
                         </div>
-                    }
                 }
 
                 <h3>Новые товары</h3>

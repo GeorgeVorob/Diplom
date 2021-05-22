@@ -20,3 +20,9 @@
 .light-link:visited {
     color: rgb(87, 87, 87)
 }
+.footer{
+    margin-top: 50px;
+}
+.categories-sidebar {
+    border-radius: 1.500rem !important;
+}

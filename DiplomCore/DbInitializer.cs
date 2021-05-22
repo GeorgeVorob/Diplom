@@ -22,8 +22,23 @@ namespace DiplomCore
 
                 var Categories = new Category[]
                 {
-                new Category { CategoryName="Graphics Cards"},
-                new Category { CategoryName="Processors"}
+                new Category { CategoryName="Видеокарты"},
+                new Category { CategoryName="Процессоры"},
+                new Category { CategoryName="Ноутбуки"},
+                new Category { CategoryName="Системные блоки"},
+                new Category { CategoryName="Микрокомпьютеры"},
+                new Category { CategoryName="Системы охлаждения"},
+                new Category { CategoryName="Материнские платы"},
+                new Category { CategoryName="Модули памяти"},
+                new Category { CategoryName="Жесткие диски"},
+                new Category { CategoryName="Твердотельные накопители"},
+                new Category { CategoryName="Мониторы"},
+                new Category { CategoryName="Графические планшеты"},
+                new Category { CategoryName="Клавиатуры"},
+                new Category { CategoryName="Мыши"},
+                new Category { CategoryName="Коммутаторы"},
+                new Category { CategoryName="Колонки"},
+                new Category { CategoryName="Гарнитуры"},
                 };
 
                 foreach (var s in Categories)
@@ -34,17 +49,54 @@ namespace DiplomCore
 
                 var GPUS = new GraphicsCard[]
                 {
-                new GraphicsCard {
-                    memory = 1000,
-                    clock= 1600,
-                    Name="MSI nVidia GeForce GT 710 , GT 710 1GD3H LP, 1ГБ, DDR3, Low Profile, Ret",
-                    quantity = 10,
-                    Price=3190,
-                    PostDate = DateTime.Now,
-                    Category = Categories.First(),
-                    ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\1.jpg")),
-                    Images = context.Images.ToList() 
-                }
+                    new GraphicsCard
+                    {
+                        memory = 1000,
+                        clock= 1600,
+                        Name="MSI nVidia GeForce GT 710 , GT 710 1GD3H LP",
+                        quantity = 10,
+                        Price=3190,
+                        PostDate = DateTime.Now,
+                        Category = Categories.First(),
+                        ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\1.jpg")),
+                        Images = context.Images.ToList()
+                    },
+                    new GraphicsCard
+                    {
+                        memory = 4000,
+                        clock= 7000,
+                        Name="PALIT nVidia GeForce GTX 1050TI , PA-GTX1050Ti StormX 4G",
+                        quantity = 10,
+                        Price=21590,
+                        PostDate = DateTime.Now,
+                        Category = Categories.First(),
+                        ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\3.jpg")),
+                        Images = context.Images.ToList()
+                    },
+                    new GraphicsCard
+                    {
+                        memory = 1000,
+                        clock= 5012,
+                        Name="ASUS NVIDIA GeForce GT 710 , GT710-SL-1GD5",
+                        quantity = 10,
+                        Price=3490,
+                        PostDate = DateTime.Now,
+                        Category = Categories.First(),
+                        ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\4.jpg")),
+                        Images = context.Images.ToList()
+                    },
+                    new GraphicsCard
+                    {
+                        memory = 2000,
+                        clock= 2100,
+                        Name="MSI nVidia GeForce GT 1030 , GT 1030 AERO ITX 2GD4 OC",
+                        quantity = 10,
+                        Price=7390,
+                        PostDate = DateTime.Now,
+                        Category = Categories.First(),
+                        ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\5.jpg")),
+                        Images = context.Images.ToList()
+                    }
                 };
 
                 foreach (GraphicsCard i in GPUS)
@@ -56,7 +108,7 @@ namespace DiplomCore
                 var prots = new CPU[]
                 {
                 new CPU {
-                    Name = "Процессор AMD Ryzen 5 2600, SocketAM4, OEM [yd2600bbm6iaf]",
+                    Name = "AMD Ryzen 5 2600, SocketAM4, OEM",
                     quantity = 10,
                     Price = 11590,
                     PostDate = DateTime.Now,

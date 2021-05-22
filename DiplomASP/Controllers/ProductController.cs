@@ -21,10 +21,10 @@ namespace DiplomASP.Controllers
         {
             ProductViewModel model = new ProductViewModel();
 
-            model.Product = _data.GetProducts(p => p.ID == productId, null, 1).First();
+            model.Product = _data.GetProducts(p => p.ID == productId, null, null, 1).First();
             if (model.Product == null) return RedirectToAction("Index", "Home"); //TODO: add 404
 
-            model.SameRecommendedProducts = _data.GetProducts(p => p.Price > (model.Product.Price * 1.3) || p.Price < (model.Product.Price / 1.3), null ,3);
+            model.SameRecommendedProducts = _data.GetProducts(p => p.Price > (model.Product.Price * 1.3) || p.Price < (model.Product.Price / 1.3), null ,null, 3);
             return View(model);
         }
     }

@@ -11,12 +11,12 @@ namespace DiplomCore.Models.CategoriesModels
 
         //TODO: больше свойств
 
-        public override Dictionary<string, string> GetPublicTTX()
+        public override List<(string, string, string, Type)> GetPublicTTX()
         {
-            var stats = new Dictionary<string, string>();
+            var stats = new List<(string, string, string, Type)>();
 
-            stats.Add("Объем видеопамяти", this.memory.ToString());
-            stats.Add("Частота", this.clock.ToString());
+            stats.Add(("Объем видеопамяти", "memory", this.memory.ToString(), this.memory.GetType()));
+            stats.Add(("Частота", "clock",this.clock.ToString(), this.clock.GetType()));
 
             return stats;
         }

@@ -1,0 +1,91 @@
+﻿@model DiplomASP.Models.ViewModels.SearchViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/css/Search.css" />
+@*@if (Model.searchingCategoryName == null)
+    {
+        <div class="col-xl-2 ml-4">-->-->
+            <!--sidebar-->
+            <!--<div class="bg-dark mx-3 categories-sidebar py-2">
+                <ul class="">
+                    @foreach (var category in Model.categories)
+                    {
+                        <li class="my-2 pe-2 ps-0">
+                            <a class="dark-link" href="@Url.Action("Index", "Search", new {selectedCategoryName = @category.CategoryName})"> @category.CategoryName </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    }
+    else
+*@
+<div class="row">
+    <div class="col-xl-3 col-lg-5 ml-4">
+        <!--sidebar search-->
+        <div class="bg-dark mx-3 categories-sidebar p-2">
+
+            <form asp-controller="Search" asp-action="Index" method="post" style="padding: 10px 10px 14px 10px;">
+                <label style="color:white">Категория</label>
+                <select name="selectedCategoryName">
+                    @foreach (var cat in Model.categories)
+                    {
+                        <option value="@cat.CategoryName">@cat.CategoryName</option>
+                    }
+                </select>
+                <hr />
+                <span style="color:white">Цена</span><br />
+                <div style="justify-content:center">
+                    <label style="color:white; width: 10%;">от</label>
+                    <input type="number" name="priceMin" /><br />
+                    <label style="color:white; width: 10%;">до</label>
+                    <input type="number" name="priceMax" />
+                </div>
+                <hr />
+                <a class="dark-link" style="font-weight: bold">По релевантности</a><br />
+                <a class="dark-link">По цене</a><br />
+                <input type="submit" class="btn btn-outline-light" value="Искать" />
+            </form>
+
+            @*<form>
+                    @foreach (var param in Model.searchingProductExample.GetPublicTTX())
+                    {
+                        <label>@param.name</label>
+                        @if (param.type.IsEnum)
+                        {
+                            foreach (var a in param.type.GetEnumValues())
+                            {
+                                <input type="checkbox" name="@a.ToString()" />
+                            }
+                        }
+                        else
+                        {
+                            <input type="number" name="@param.name" />
+                        }
+                    }
+                </form>*@
+        </div>
+    </div>
+    @*}*@
+    <div class="col-xl-9 col-lg-7" style="margin-top: 70px;">
+        <a class="btn btn-outline-dark">Предыдущая</a>
+        <a class="btn btn-outline-dark">Предыдущая</a>
+        <div class="row">
+            @foreach (var product in Model.resultProducts)
+            {
+
+                <div class="col-12">
+                    <img src="data:image/jpg;base64, @product.ImageThumbnail" style="height: 100px; width: 100px" />
+                    <a href="@Url.Action("Index", "Product", new {productId = product.ID})" class="light-link"><h5>@product.Name.Substring(0, product.Name.Length <= 90 ? product.Name.Length : 90)</h5></a>
+                </div>
+                <div style="padding-right: 100px;">
+                    <div style="float: right;"><span style="font-weight:bold; padding-right: 10px;">@product.Price руб.</span><button class="btn btn-dark" style="float:right" type="submit">Добавить в корзину</button></div><br />
+                    <hr class="mt-4" />
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -8,7 +8,7 @@ namespace DiplomCore.Models
 {
     public abstract class Product
     {
-        public abstract Dictionary<string, string> GetPublicTTX();
+        public abstract List<(string name, string techname ,string value, Type type )> GetPublicTTX();
         public int ID { get; set; }
         [Required]
         public int CategoryID { get; set; }
@@ -22,7 +22,6 @@ namespace DiplomCore.Models
         public int quantity { get; set; }
 
         [Required]
-        [Column(TypeName = "money")]
         public int Price { get; set; }
 
         [DataType(DataType.Currency)]

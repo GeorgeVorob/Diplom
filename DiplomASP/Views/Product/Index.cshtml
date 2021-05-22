@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-6">
                 <h5>Product</h5>
-                <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+                <div id="carousel" class="carousel slide" data-bs-ride="carousel" style="background: #c8c8c8;">
                     <div class="carousel-inner" style=" height:400px !important;">
                         >
                         <div class="carousel-item active" style="height: 100%; width: 100%;">
@@ -34,7 +34,7 @@
             <div class="col-12">
                 @foreach (var stats in Model.Product.GetPublicTTX())
                 {
-    <span>@stats.Key: @stats.Value</span><hr />}
+    <span>@stats.name: @stats.value</span><hr />}
             </div>
         </div>
     </div>

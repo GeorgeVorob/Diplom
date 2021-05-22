@@ -1,0 +1,21 @@
+﻿@model DiplomASP.Models.ViewModels.CartModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/css/Cart.css" />
+<div style="margin: 0px 19% 0px 19%">
+    @foreach (var p in Model.TmpProducts)
+    {
+    <div>
+        <img src="data:image/jpg;base64, @p.ImageThumbnail" style="height:50px; width:50px;" />
+        <a class="light-link" href="@Url.Action("Index", "Product", new { productId = p.ID })"><span>@p.Name</span></a><br />
+        5шт.<br />
+        <span style="font-weight:bold; float:right">@p.Price руб.</span><br />
+        <hr />
+    </div>
+        <br />
+    }
+    <span style="font-weight:bold; float:right">Итого: @Model.TmpProducts.Sum(p => p.Price).ToString() руб.</span><br />
+    <a class="btn btn-outline-dark" style="float:right">Оформить заказ</a>
+</div>

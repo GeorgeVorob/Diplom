@@ -25,19 +25,32 @@ namespace DiplomCore.Services
                 return db.Categories.ToList();
             }
         }
-        public List<Product> GetProducts(Expression<Func<Product,bool>> whereArgs, Expression<Func<Product, object>> orderArgs, int amount)
+        public List<Product> GetProducts(
+            Expression<Func<Product, bool>> whereArgs,
+            (Expression<Func<Product, object>> orderArg, bool isDescending)? orderArgs,
+            string productNameLikeArg,
+            int amount,
+            int startFrom = 0
+            )
         {
             using (var db = new Context(connectionString))
             {
                 IQueryable<Product> query;
                 query = db.Products.AsQueryable();
+
                 if (whereArgs != null)
                     query = query.Where(whereArgs);
-                var s = query.ToQueryString();
+                if (productNameLikeArg != null)
+                    query = query.Where(p => EF.Functions.Like(p.Name, $"%{productNameLikeArg}%"));
                 if (orderArgs != null)
-                    query = query.OrderBy(orderArgs);
+                    if (orderArgs.Value.isDescending == false)
+                        query = query.OrderBy(orderArgs.Value.orderArg);
+                    else
+                        query = query.OrderByDescending(orderArgs.Value.orderArg);
+
                 query = query.Include(i => i.Orders).Include(i => i.Images);
-                return query.Take(amount).ToList();
+                var s = query.ToQueryString();
+                return query.Skip(startFrom).Take(amount).ToList();
             }
         }
         public Image GetImageById(int id)

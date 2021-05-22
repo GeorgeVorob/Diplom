@@ -26,8 +26,8 @@ namespace DiplomASP.Controllers
         {
             IndexModel model = new IndexModel();
             model.categories = _data.GetCategories();
-            model.popularProducts = _data.GetProducts(null, p => p.Orders.Sum(x => x.Quantity), 6);
-            model.newProducts = _data.GetProducts(null, p => p.PostDate, 4);
+            model.popularProducts = _data.GetProducts(null, (p => p.Orders.Sum(x => x.Quantity), false), null, 6);
+            model.newProducts = _data.GetProducts(null, (p => p.PostDate, false), null, 4);
             return View(model);
         }
 
