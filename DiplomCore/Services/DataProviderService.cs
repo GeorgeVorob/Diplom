@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using DiplomCore.Models;
 using DiplomCore.Models.CategoriesModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiplomCore.Services
@@ -14,8 +15,8 @@ namespace DiplomCore.Services
         public DataProviderService(string dbConnStr)
         {
             connectionString = dbConnStr;
-            using (var db = new Context(connectionString))
-                DbInitializer.Initialize(db);
+            //using (var db = new Context(connectionString)) //Вынесено в Program.cs после билда, теперь DI сервиса не генерит базу автоматически
+            //    DbInitializer.Initialize(db);
         }
 
         public List<Category> GetCategories()

@@ -7,21 +7,23 @@ namespace DiplomCore.Models
     public class Order
     {
         public int ID { get; set; }
-        public int? UserID { get; set; }
+        //public int? UserID { get; set; }
 #nullable enable
-        public User? User { get; set; }
+        public User? user { get; set; }
 #nullable disable
+        [Required]
+        public string email { get; set; }
 
-        public ICollection<OrderedProduct> Orderedproducts { get; set; }
+        [Required]
+        public ICollection<OrderedProduct> orderedProducts { get; set; }
 
         [Required]
         public string shippingAdress { get; set; }
 
         [Required]
-        [DataType(DataType.PhoneNumber)]
-        public string Phone { get; set; }
+        public string phone { get; set; }
 
         [Required]
-        public OrderStatus Status { get; set; }
+        public OrderStatus status { get; set; }
     }
 }

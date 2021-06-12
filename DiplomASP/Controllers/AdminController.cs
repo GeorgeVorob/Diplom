@@ -1,6 +1,7 @@
 ﻿using DiplomASP.Models;
 using DiplomASP.Models.ViewModels;
 using DiplomCore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace DiplomASP.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -24,7 +26,7 @@ namespace DiplomASP.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Home");
+            return View();
         }
     }
 }

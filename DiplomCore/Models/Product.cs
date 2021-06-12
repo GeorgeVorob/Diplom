@@ -24,9 +24,7 @@ namespace DiplomCore.Models
         [Required]
         public int Price { get; set; }
 
-        [DataType(DataType.Currency)]
-        [Column(TypeName = "money")]
-        public decimal? Discount { get; set; }
+        public int Discount { get; set; }
 
         [Required]
         [DataType(DataType.Date)]

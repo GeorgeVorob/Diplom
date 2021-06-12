@@ -4,20 +4,23 @@ using System.Linq;
 using System.Collections.Generic;
 using DiplomCore.Models;
 using DiplomCore.Models.CategoriesModels;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace DiplomCore
 {
     public class DbInitializer
     {
-        public static void Initialize(Context context)
+        public async static Task<int> Initialize(Context context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             try
             {
+                IdentityResult result;
                 context.Database.EnsureCreated();
 
                 if (context.Products.Any())
                 {
-                    return;   // DB has been seeded
+                    return 0;   // DB has been seeded
                 }
 
                 var Categories = new Category[]
@@ -83,7 +86,8 @@ namespace DiplomCore
                         PostDate = DateTime.Now,
                         Category = Categories.First(),
                         ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\4.jpg")),
-                        Images = context.Images.ToList()
+                        Images = context.Images.ToList(),
+                        Discount = 10 
                     },
                     new GraphicsCard
                     {
@@ -150,36 +154,61 @@ namespace DiplomCore
 
                 context.SaveChanges();
 
-                var people = new User[]
-    {
-                new User {
-                    Login = "loginFromUser",
-                    Password = "PasswodFromUser",
-                    FirstName = "Ivan",
-                    RegDate = DateTime.Now,
-                    Role = Role.user
-                },
-                new User {
-                    Login = "loginFromAdmin",
-                    Password = "PasswodFromAdmin",
-                    FirstName = "DIO",
-                    RegDate = DateTime.Now,
-                    Role = Role.admin
-                }
-    };
-
-                foreach (var u in people)
+                var Roles = new IdentityRole[]
                 {
-                    context.Users.Add(u);
+                    new IdentityRole("admin"),
+                    new IdentityRole("user"),
+                };
+
+                foreach (var r in Roles)
+                {
+                    result = await roleManager.CreateAsync(r);
                 }
+                context.SaveChanges();
+
+                var Users = new User[]
+                {
+                    new User{ UserName =  "loginFromUser@gmail.com", Email = "emailFromUser@gmail.com"},
+                    new User{ UserName =  "loginFromAdmin@gmail.com", Email = "emailFromAdmin@gmail.com"}
+                };
+                result = await userManager.CreateAsync(Users[0], "PasswodFromUser!1");
+                result = await userManager.AddToRoleAsync(userManager.FindByEmailAsync("emailFromUser@gmail.com").Result, "user");
+                result = await userManager.CreateAsync(Users[1], "PasswodFromAdmin!1");
+                result = await userManager.AddToRoleAsync(userManager.FindByEmailAsync("emailFromAdmin@gmail.com").Result, "admin");
+
+                context.SaveChanges();
+
+                //            var people = new User[]
+                //{
+                //            new User {
+                //                UsLogin = "loginFromUser",
+                //                UsPassword = "PasswodFromUser",
+                //                FirstName = "Ivan",
+                //                RegDate = DateTime.Now,
+                //                Role = Role.user
+                //            },
+                //            new User {
+                //                UsLogin = "loginFromAdmin",
+                //                UsPassword = "PasswodFromAdmin",
+                //                FirstName = "DIO",
+                //                RegDate = DateTime.Now,
+                //                Role = Role.admin
+                //            }
+                //};
+
+                //            foreach (var u in people)
+                //            {
+                //                context.Users.Add(u);
+                //            }
 
                 var sells = new Order[]
                 {
                 new Order
                 {
                     shippingAdress = "tuda",
-                    Phone = "88005553535",
-                    Status = OrderStatus.done
+                    phone = "88005553535",
+                    email = "testmail@gmail.com",
+                    status = OrderStatus.pending
                 }
                 };
 
@@ -206,10 +235,12 @@ namespace DiplomCore
                 }
 
                 context.SaveChanges();
+                return 1;
             }
             catch (Exception e)
             {
                 Console.WriteLine("a");
+                return 0;
             }
         }
 
