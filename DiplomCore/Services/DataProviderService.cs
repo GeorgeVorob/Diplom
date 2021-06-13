@@ -19,6 +19,33 @@ namespace DiplomCore.Services
             //    DbInitializer.Initialize(db);
         }
 
+        public bool CreateOrderWithProducts(Order order, List<(int productID, int quantity)> products) //TODO перегрузку для полноценных типов товаров?
+        {
+            try
+            {
+                using (var db = new Context(connectionString))
+                {
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+                    foreach (var prod in products)
+                    {
+                        db.OrderedProducts.Add(new OrderedProduct {
+                            OrderID = order.ID,
+                            ProductID = prod.productID,
+                            Quantity = prod.quantity
+                            });
+                    }
+                    db.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("a");
+                return false;
+                throw;
+            }
+        }
         public List<Category> GetCategories()
         {
             using (var db = new Context(connectionString))

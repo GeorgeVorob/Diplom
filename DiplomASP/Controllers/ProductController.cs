@@ -6,6 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using DiplomASP.Models.ViewModels.PartialViewModels;
 
 namespace DiplomASP.Controllers
 {
@@ -21,11 +24,12 @@ namespace DiplomASP.Controllers
         {
             ProductViewModel model = new ProductViewModel();
 
-            model.Product = _data.GetProducts(p => p.ID == productId, null, null, 1).First();
+            model.Product = _data.GetProducts(p => p.ID == productId, null, null, 1).FirstOrDefault();
             if (model.Product == null) return RedirectToAction("Index", "Home"); //TODO: add 404
 
-            model.SameRecommendedProducts = _data.GetProducts(p => p.Price > (model.Product.Price * 1.3) || p.Price < (model.Product.Price / 1.3), null ,null, 3);
+            model.SameRecommendedProducts = _data.GetProducts(p => p.Price > (model.Product.Price * 1.3) || p.Price < (model.Product.Price / 1.3), null, null, 3);
             return View(model);
         }
+        
     }
 }

@@ -5,17 +5,56 @@
 }
 <link rel="stylesheet" href="~/css/Cart.css" />
 <div style="margin: 0px 19% 0px 19%">
-    @foreach (var p in Model.TmpProducts)
-    {
-    <div>
-        <img src="data:image/jpg;base64, @p.ImageThumbnail" style="height:50px; width:50px;" />
-        <a class="light-link" href="@Url.Action("Index", "Product", new { productId = p.ID })"><span>@p.Name</span></a><br />
-        5шт.<br />
-        <span style="font-weight:bold; float:right">@p.Price руб.</span><br />
-        <hr />
-    </div>
+    <form method="post" asp-action="CreateOrder">
+        @{
+            int megaSumm = 0;
+            int i = 0;
+        }
+        @foreach (var p in Model.Products)
+        {
+            int summ;
+            {
+                summ = p.Item2 * p.Item1.Price;
+            }
+
+            <div>
+                <img src="data:image/jpg;base64, @p.Item1.ImageThumbnail" style="height:50px; width:50px;" />
+                <a class="light-link" href="@Url.Action("Index", "Product", new { productId = p.Item1.ID })"><span>@p.Item1.Name</span></a><br />
+                <input type="hidden" name="id" value="@p.Item1.ID" />
+                <input type="number" name="quantity" value="@p.Item2.ToString()" />шт.
+                <a class="btn btn-dark" style="float:right" href="@Url.Action("RemoveFromCart", "Cart",new { productId = p.Item1.ID })">Удалить</a><br />
+                <span style="font-weight:bold; float:right"> @p.Item2.ToString() x @p.Item1.Price = @summ.ToString(); </span><br />
+                <hr />
+            </div>
+            <br />
+
+            {
+                megaSumm += summ;
+                i++;
+            }
+        }
+        @if (Model.Products.Count > 0)
+        {
+            <span style="font-weight:bold; float:right">Итого: @megaSumm.ToString() руб.</span><br />
+            <a class="btn btn-outline-dark" style="float:right"
+               data-bs-toggle="collapse" href="#shippingDetails" role="button" aria-expanded="false" aria-controls="shippingDetails">
+                Оформить заказ
+            </a>
+        }
+        @if (Model.resultModel != null)
+        {
+            @Html.PartialAsync("_ActionResultPartial", Model.resultModel).Result;
+        }
         <br />
-    }
-    <span style="font-weight:bold; float:right">Итого: @Model.TmpProducts.Sum(p => p.Price).ToString() руб.</span><br />
-    <a class="btn btn-outline-dark" style="float:right">Оформить заказ</a>
+        <div class="collapse" id="shippingDetails" style="margin-top: 20px;">
+            <h4>Информация о доставке</h4>
+            <label>Адрес электронной почты</label>
+            <input type="text" name="email" value="@Model.email" required /><br />
+            <label>Телефонный номер</label>
+            <input type="text" name="phone" value="@Model.phone" required /><br />
+            <label>Адрес доставки</label>
+            <input type="text" name="shippingAddress" value="@Model.shippingAddress" required /><br />
+            <input class="btn btn-outline-success" type="submit" value="Оформить заказ" />
+        </div>
+    </form>
 </div>

@@ -28,7 +28,18 @@
             <div class="col-6">
                 <h4>@Model.Product.Name</h4>
                 <h3>@Model.Product.Price Руб.</h3>
-                <button class="btn btn-outline-dark" style="float:right;">Добавить в корзину</button>
+                <form asp-action="AddToCart" asp-controller="Cart"
+                      target="alert"
+                      method="post">
+                    <input type="hidden" value="@Model.Product.ID" name="productId" />
+                    <label>Кол-во</label>
+                    <input type="number" value="1" name="quantity" />
+                    <input class="btn btn-outline-dark" style="float:right;" type="submit" value="Добавить в корзину" />
+                </form>
+
+                <iframe name="alert">
+                </iframe>
+
             </div>
             <div class="col-12">
                 @foreach (var stats in Model.Product.GetPublicTTX())
@@ -41,12 +52,11 @@
         Похожие товары:
         @foreach (var sameprods in Model.SameRecommendedProducts)
         {
-            <div style="float: right;text-align: center;">
-                <img src="data:image/jpg;base64, @sameprods.ImageThumbnail" style="height: 170px; width: 170px; object-fit: contain"/> <br/>
-                <h6><a href="@Url.Action("Index", "Product", new {productId = sameprods.ID})" class="light-link"><span style="font-size:13px">@sameprods.Name</span></a></h6>
-                <span style="font-size:12px">@sameprods.Price руб.</span>
-                <hr/>
-            </div>
-        }
+<div style="float: right;text-align: center;">
+    <img src="data:image/jpg;base64, @sameprods.ImageThumbnail" style="height: 170px; width: 170px; object-fit: contain" /> <br />
+    <h6><a href="@Url.Action("Index", "Product", new {productId = sameprods.ID})" class="light-link"><span style="font-size:13px">@sameprods.Name</span></a></h6>
+    <span style="font-size:12px">@sameprods.Price руб.</span>
+    <hr />
+</div>}
     </div>
 </div>

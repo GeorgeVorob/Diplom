@@ -6,6 +6,17 @@ namespace DiplomCore.Models
     public enum OrderStatus { pending, done, declined };
     public class Order
     {
+        public Order()
+        {
+
+        }
+        public Order(string email, string shippingAdress, string phone, OrderStatus status)
+        {
+            this.email = email;
+            this.shippingAdress = shippingAdress;
+            this.phone = phone;
+            this.status = status;
+        }
         public int ID { get; set; }
         //public int? UserID { get; set; }
 #nullable enable

@@ -1,0 +1,24 @@
+﻿@model DiplomASP.Models.ViewModels.PartialViewModels.ActionResultPartialViewModel
+@{string style;
+    @switch (Model.status)
+    {
+        case DiplomASP.Models.ViewModels.PartialViewModels.BootstrapAlertClass.danger:
+            style = "color: #0f5132; background-color: #d1e7dd; border-color: #badbcc;";
+            break;
+        case DiplomASP.Models.ViewModels.PartialViewModels.BootstrapAlertClass.primary:
+            style = "color: #084298; background-color: #cfe2ff; border - color: #b6d4fe;";
+            break;
+        case DiplomASP.Models.ViewModels.PartialViewModels.BootstrapAlertClass.success:
+            style = "color: #0f5132; background-color: #d1e7dd;border-color: #badbcc;";
+            break;
+        case DiplomASP.Models.ViewModels.PartialViewModels.BootstrapAlertClass.warning:
+            style = "color: #664d03; background-color: #fff3cd; border-color: #ffecb5;";
+            break;
+        default:
+            style = "color: #636464; background-color: #fefefe; border-color: #fdfdfe;";
+            break;
+}
+        }
+<div style="@style font-family: Arial; padding: 10px 10px 10px 10px;" role="alert">
+    @Model.message
+</div>
