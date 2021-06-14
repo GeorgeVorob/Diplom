@@ -29,11 +29,12 @@ namespace DiplomCore.Services
                     db.SaveChanges();
                     foreach (var prod in products)
                     {
-                        db.OrderedProducts.Add(new OrderedProduct {
+                        db.OrderedProducts.Add(new OrderedProduct
+                        {
                             OrderID = order.ID,
                             ProductID = prod.productID,
                             Quantity = prod.quantity
-                            });
+                        });
                     }
                     db.SaveChanges();
                 }
@@ -53,6 +54,39 @@ namespace DiplomCore.Services
                 return db.Categories.ToList();
             }
         }
+        public List<Order> GetOrders()
+        {
+            using (var db = new Context(connectionString))
+            {
+                return db.Orders.OrderByDescending(o => o.CreateDate).ToList();
+                db.Orders.AsNoTracking();
+            }
+        }
+        public bool EditOrder(int orderId, string? email, string shippingAdress, string? phone, OrderStatus? status)
+        {
+            try
+            {
+                using (var db = new Context(connectionString))
+                {
+                    var orderToChange = db.Orders.Where(o => o.ID == orderId).First();
+                    if (email != null)
+                        orderToChange.email = email;
+                    if (shippingAdress != null)
+                        orderToChange.shippingAdress = shippingAdress;
+                    if (phone != null)
+                        orderToChange.phone = phone;
+                    if (status != null)
+                        orderToChange.status = (OrderStatus)status;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+                throw;
+            }
+        }
         public List<Product> GetProducts(
             Expression<Func<Product, bool>> whereArgs,
             (Expression<Func<Product, object>> orderArg, bool isDescending)? orderArgs,
@@ -63,6 +97,8 @@ namespace DiplomCore.Services
         {
             using (var db = new Context(connectionString))
             {
+                // object kekw = db.Set<Product>().Add();
+
                 IQueryable<Product> query;
                 query = db.Products.AsQueryable();
 
@@ -79,6 +115,23 @@ namespace DiplomCore.Services
                 query = query.Include(i => i.Orders).Include(i => i.Images);
                 var s = query.ToQueryString();
                 return query.Skip(startFrom).Take(amount).ToList();
+            }
+        }
+        public bool AddProduct<T>(object Product) where T : class
+        {
+            try
+            {
+                using (var db = new Context(connectionString))
+                {
+                    db.Set<T>().Add((T)Product);
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+                throw;
             }
         }
         public Image GetImageById(int id)

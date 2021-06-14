@@ -11,19 +11,24 @@ namespace DiplomCore.Models
         public abstract List<(string name, string techname ,string value, Type type )> GetPublicTTX();
         public int ID { get; set; }
         [Required]
+        [PublicProp("number", "Категория")]
         public int CategoryID { get; set; }
         public Category Category { get; set; }
 
         [Required]
+        [PublicProp("text","Название")]
         [StringLength(200)]
         public string Name { get; set; }
 
         [Required]
+        [PublicProp("number","Кол-во")]
         public int quantity { get; set; }
 
         [Required]
+        [PublicProp("number","Цена")]
         public int Price { get; set; }
 
+        [PublicProp("number","Скидка")]
         public int Discount { get; set; }
 
         [Required]

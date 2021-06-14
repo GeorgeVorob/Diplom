@@ -1,0 +1,31 @@
+﻿@model DiplomCore.Models.Product
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/css/Admin.css" />
+<div class="row">
+    <div class="col-3">
+
+        @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post))
+        {
+            <input type="hidden" value="@ViewData["RequestCategory"]" name="RequestCategory"/>
+            foreach (var p in Model.GetType().GetProperties())
+            {
+                object[] attrs = p.GetCustomAttributes(true);
+                foreach (object attr in attrs)
+                {
+                    PublicPropAttribute reqAttr = attr as PublicPropAttribute;
+                    if (reqAttr != null)
+                    {
+                        <label style="float: left;">@reqAttr.publicName</label>
+                        <input style="float: right;" type="@reqAttr.htmlType" name="properties[@p.Name]"/><br style="margin: 10px 0px 10px 0px" />
+                    }
+                }
+            }
+            <input type="submit" value="Создать товар" />
+        }
+
+
+    </div>
+</div>

@@ -7,9 +7,11 @@ namespace DiplomCore.Models.CategoriesModels
     public class CPU : Product
     {
         [Required]
+        [PublicProp("number","Кол-во ядер")]
         public int cores { get; set; }
 
         [Required]
+        [PublicProp("number","Частота МГц")]
         public int clock { get; set; } //МГц 
 
         public override List<(string, string, string, Type)> GetPublicTTX()

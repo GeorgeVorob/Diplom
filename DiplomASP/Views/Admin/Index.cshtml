@@ -1,1 +1,68 @@
-﻿<h1>Ты админ</h1>
+﻿@model DiplomASP.Models.ViewModels.AdminModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<link rel="stylesheet" href="~/css/Admin.css" />
+<div class="row">
+    <form asp-action="AddProduct" method="get">
+        <select name="categoryId">
+            @foreach (var c in Model.categories)
+            {
+                <option value="@c.ID">@c.CategoryName</option>
+            }
+        </select>
+        <input type="submit" value="Добавить товар"/>
+    </form>
+    <div class="col-12" name="OrderList" style="overflow: scroll">
+        @if (Model.resultModel != null)
+        {
+            @Html.PartialAsync("_ActionResultPartial", Model.resultModel).Result;
+        }
+        <table class="table table-striped">
+            <tr>
+                <th>№</th>
+                <th>Пользователь</th>
+                <th>email</th>
+                <th>Адрес</th>
+                <th>Телефон</th>
+                <th>Статус</th>
+                <th>Дата оформления</th>
+                <th></th>
+                <th></th>
+            </tr>
+            @{string statusClass; }
+            @foreach (var o in Model.orders)
+            {
+                @switch (o.status)
+                {
+                    case OrderStatus.pending:
+                        statusClass = "table-warning";
+                        break;
+                    case OrderStatus.done:
+                        statusClass = "table-success";
+                        break;
+                    case OrderStatus.declined:
+                        statusClass = "table-danger";
+                        break;
+                    default:
+                        statusClass = "";
+                        break;
+                }
+
+                <tr class="@statusClass">
+                    <td>@o.ID</td>
+                    <td>@o.user?.UserName</td>
+                    <td>@o.email</td>
+                    <td>@o.shippingAdress</td>
+                    <td>@o.phone</td>
+                    <td>@o.status.ToDescriptionString()</td>
+                    <td>@o.CreateDate</td>
+                    <td><a href="@Url.Action("ChangeStatus", "Admin", new {status = OrderStatus.done, orderId=o.ID})">Принять</a></td>
+                    <td><a href="@Url.Action("ChangeStatus", "Admin", new {status = OrderStatus.pending, orderId=o.ID})">В_ожидание</a></td>
+                    <td><a href="@Url.Action("ChangeStatus", "Admin", new {status = OrderStatus.declined, orderId=o.ID})">Отклонить</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

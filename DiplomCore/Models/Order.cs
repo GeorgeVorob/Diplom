@@ -1,9 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace DiplomCore.Models
 {
-    public enum OrderStatus { pending, done, declined };
+    public enum OrderStatus {
+        [Description("Ожидание")]
+        pending,
+        [Description("Завершено")]
+        done,
+        [Description("Отклонено")]
+        declined };
+
+    public static class MyEnumExtensions
+    {
+        public static string ToDescriptionString(this OrderStatus val)
+        {
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])val
+               .GetType()
+               .GetField(val.ToString())
+               .GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return attributes.Length > 0 ? attributes[0].Description : string.Empty;
+        }
+    }
+
     public class Order
     {
         public Order()
@@ -36,5 +57,11 @@ namespace DiplomCore.Models
 
         [Required]
         public OrderStatus status { get; set; }
+
+        [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime CreateDate { get; set; } = DateTime.Now;
+
     }
 }
