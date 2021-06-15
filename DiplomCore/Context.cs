@@ -12,7 +12,7 @@ namespace DiplomCore
         {
         }
 
-        private string _connectionString;
+        private static string _connectionString; //TODO: ВАЖНО! передавать строку подключения нормально, не через статику
 
         public Context(string connectionString)
         {
@@ -22,7 +22,6 @@ namespace DiplomCore
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (_connectionString == null)
-                //TODO: ВАЖНО! передавать строку подключения нормально
                 _connectionString = "Data Source=DESKTOP-49NIL9J;Initial Catalog=identity7;Integrated Security=True";
             optionsBuilder.UseSqlServer(_connectionString);
         }

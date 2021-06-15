@@ -13,10 +13,17 @@ namespace DiplomASP.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {
+
+
+        public IdentityHostingStartup()
+        {
+
+        }
+
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<Context>(options => { }); //TODO: ВАЖНО! передавать строку подключения нормально
+                services.AddDbContext<Context>(options => {}); //TODO: ВАЖНО! передавать строку подключения нормально, не через статику
 
                 services.AddDefaultIdentity<User>(options => { })
                     .AddRoles<IdentityRole>()
