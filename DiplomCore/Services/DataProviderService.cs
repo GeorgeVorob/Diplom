@@ -97,7 +97,6 @@ namespace DiplomCore.Services
         {
             using (var db = new Context(connectionString))
             {
-                // object kekw = db.Set<Product>().Add();
 
                 IQueryable<Product> query;
                 query = db.Products.AsQueryable();

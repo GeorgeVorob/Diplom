@@ -28,20 +28,6 @@ namespace DiplomCore
                 new Category { CategoryName="Видеокарты"},
                 new Category { CategoryName="Процессоры"},
                 new Category { CategoryName="Ноутбуки"},
-                new Category { CategoryName="Системные блоки"},
-                new Category { CategoryName="Микрокомпьютеры"},
-                new Category { CategoryName="Системы охлаждения"},
-                new Category { CategoryName="Материнские платы"},
-                new Category { CategoryName="Модули памяти"},
-                new Category { CategoryName="Жесткие диски"},
-                new Category { CategoryName="Твердотельные накопители"},
-                new Category { CategoryName="Мониторы"},
-                new Category { CategoryName="Графические планшеты"},
-                new Category { CategoryName="Клавиатуры"},
-                new Category { CategoryName="Мыши"},
-                new Category { CategoryName="Коммутаторы"},
-                new Category { CategoryName="Колонки"},
-                new Category { CategoryName="Гарнитуры"},
                 };
 
                 foreach (var s in Categories)
@@ -119,9 +105,17 @@ namespace DiplomCore
                     Category = Categories[1],
                     cores = 6,
                     clock = 3400,
-                    ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\2.jpg"))
+                    ImageThumbnail = Convert.ToBase64String (File.ReadAllBytes(@"wwwroot\TestImages\2.jpg")),
                 }
                 };
+                Notebook a = new Notebook
+                {
+                    Images = context.Images.ToList(),
+                    Category = Categories[2],
+                    Name = "DIGMA EVE 14 C411, 14.1 IPS",
+                    ImageThumbnail = Convert.ToBase64String(File.ReadAllBytes(@"wwwroot\TestImages\222.jpg"))
+                };
+                context.Notebooks.Add(a);
 
                 foreach (var i in prots)
                 {
@@ -239,6 +233,7 @@ namespace DiplomCore
             }
             catch (Exception e)
             {
+
                 Console.WriteLine("a");
                 return 0;
             }

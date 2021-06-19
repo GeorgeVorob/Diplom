@@ -37,6 +37,7 @@ namespace DiplomCore
         public DbSet<OrderedProduct> OrderedProducts { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<ImageContent> ImageContents { get; set; }
+        public DbSet<Notebook> Notebooks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +51,7 @@ namespace DiplomCore
             modelBuilder.Entity<OrderedProduct>().ToTable("OrderedProduct");
             modelBuilder.Entity<Image>().ToTable("Image");
             modelBuilder.Entity<ImageContent>().ToTable("ImageContent");
+            modelBuilder.Entity<Notebook>().ToTable("Notebook");
 
             modelBuilder.Entity<OrderedProduct>().HasKey(c => new { c.OrderID, c.ProductID });
             //modelBuilder.Entity<Image>().HasKey(c => new {c.ImageID, c.ProductID});

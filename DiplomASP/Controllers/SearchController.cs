@@ -24,8 +24,7 @@ namespace DiplomASP.Controllers
             _data = data;
         }
 
-        [HttpPost]
-        public IActionResult Index(string? searchString, string? selectedCategoryName,string orderParam = "PopularDecr" , int priceMax = Int32.MaxValue, int priceMin = 0)
+        public IActionResult Index(string? searchString = "", string? selectedCategoryName = "Видеокарты",string orderParam = "PopularDecr" , int priceMax = Int32.MaxValue, int priceMin = 0)
         {
             SearchViewModel model = new SearchViewModel();
             model.searchString = searchString;

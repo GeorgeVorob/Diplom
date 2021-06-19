@@ -8,7 +8,7 @@ namespace DiplomCore.Models
 {
     public abstract class Product
     {
-        public abstract List<(string name, string techname ,string value, Type type )> GetPublicTTX();
+        //public abstract List<(string name, string techname ,string value, Type type )> GetPublicTTX();
         public int ID { get; set; }
         [Required]
         [PublicProp("number", "Категория")]
@@ -16,20 +16,20 @@ namespace DiplomCore.Models
         public Category Category { get; set; }
 
         [Required]
-        [PublicProp("text","Название")]
+        [PublicProp("text", "Название")]
         [StringLength(200)]
-        public string Name { get; set; }
+        public string Name { get; set; } = "NA";
 
         [Required]
-        [PublicProp("number","Кол-во")]
-        public int quantity { get; set; }
+        [PublicProp("number", "Кол-во")]
+        public int quantity { get; set; } = 10;
 
         [Required]
-        [PublicProp("number","Цена")]
-        public int Price { get; set; }
+        [PublicProp("number", "Цена")]
+        public int Price { get; set; } = 15600;
 
-        [PublicProp("number","Скидка")]
-        public int Discount { get; set; }
+        [PublicProp("number", "Скидка")]
+        public int Discount { get; set; } = 0;
 
         [Required]
         [DataType(DataType.Date)]

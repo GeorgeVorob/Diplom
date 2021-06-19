@@ -12,7 +12,7 @@
                 @foreach (var category in Model.categories)
                 {
                     <li class="my-2 pe-2 ps-0">
-                        <a class="dark-link" href="#"> @category.CategoryName </a>
+                        <a class="dark-link" href="@Url.Action("Index", "Search", new {selectedCategoryName = category.CategoryName})"> @category.CategoryName </a>
                     </li>
                 }
 
